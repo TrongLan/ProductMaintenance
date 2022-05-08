@@ -21,44 +21,44 @@ public class ProductController {
 	
 	@GetMapping("/displayAllProducts")
 	public String getAllProducts(Model mod) {
-		List<Product> product_list = productRepo.findAll();
-		mod.addAttribute("dssp", product_list);
-		return "viewProducts";
+            List<Product> product_list = productRepo.findAll();
+            mod.addAttribute("dssp", product_list);
+            return "viewProducts";
 	}
 	
 	@GetMapping("/deleteProduct")
 	public String openConfirmDelete(Model mod, @RequestParam(name = "pcode",required = true) String pcode) {
-		Product p = productRepo.findProductByCode(pcode);
-		mod.addAttribute("product", p);
-		return "confirmDelete";
+            Product p = productRepo.findProductByCode(pcode);
+            mod.addAttribute("product", p);
+            return "confirmDelete";
 	}
 	
 	@GetMapping("/comfirmDelete")
 	public String afterDelete(Model mod, @RequestParam(name = "pcode",required = true) String pcode, @RequestParam(name = "confirm",required = false) String agree) {
-		if(agree.equals("yes")) {
-			productRepo.delete(productRepo.findProductByCode(pcode));	
-		}
-		return "redirect:/displayAllProducts";
+            if(agree.equals("yes")) {
+                productRepo.delete(productRepo.findProductByCode(pcode));	
+            }
+            return "redirect:/ProductMaintenance/displayAllProducts";
 	}
 	
 	@GetMapping("/updateProduct")
-	public String openUpdatePage(Model mod, @RequestParam(name = "pcode",required = true) String pcode) {
-		Product p = productRepo.findProductByCode(pcode);
-		mod.addAttribute("product", p);
-		return "updateProduct";
+	public String openUpdatePage(Model mod, @RequestParam(name = "pcode",required = true) Long id) {
+            Product p = productRepo.getById(id);
+            mod.addAttribute("product", p);
+            return "updateProduct";
 	}
 	
 	@GetMapping("/addNewProduct")
 	public String addNewProduct(Model mod) {
-		Product p = new Product();
-		mod.addAttribute("product", p);
-		return "updateProduct";
+            Product p = new Product();
+            mod.addAttribute("product", p);
+            return "updateProduct";
 	}
 	
 	@PostMapping("/updateProduct")
 	public String afterUpdateProduct(Product p) {
-		productRepo.save(p);
-		return "";
+            productRepo.save(p);
+            return "redirect:/ProductMaintenance/displayAllProducts";
 	}
 	
 }

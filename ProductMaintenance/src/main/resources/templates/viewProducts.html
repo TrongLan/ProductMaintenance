@@ -1,0 +1,35 @@
+<html xmlns=http://www.w3.org/1999/xhtml
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Products</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+    <body>
+    <div >
+        <h1>Products</h1>
+        <table cellpadding="4" border=1 >
+            <tr>
+                <th>Code</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+            <div th:each="product: ${dssp}">
+                <tr>
+                    <td th:text="${product.code}"></td>
+                    <td th:text="${product.description}"></td>
+                    <td th:text="${product.price}"></td>
+                    <td>
+                        <a th:href="@{/ProductMaintenance/updateProduct?pcode={code}(code=${product.id})}">Edit</a>
+                        <a th:href="@{/ProductMaintenance/deleteProduct?pcode={code}(code=${product.code})}">Delete</a>
+                    </td>
+                </tr>
+            </div>
+        </table>
+        <br>
+        <a th:href="@{/ProductMaintenance/addNewProduct}">Add new</a>
+    </div>
+    </body>
+</html>
+
